@@ -693,6 +693,7 @@
 		/* PacketTunnelExtension Target configurations */
 		7BDE995396A35A279EF6FB3B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelExtension/PacketTunnelExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -720,6 +721,7 @@
 		};
 		667EF0531A895D209264325D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelExtension/PacketTunnelExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -745,6 +747,7 @@
 		};
 		7653B95F7EAC531C96548005 /* Profile */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelExtension/PacketTunnelExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;

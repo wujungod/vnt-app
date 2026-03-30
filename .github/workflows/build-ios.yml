@@ -42,7 +42,7 @@ jobs:
     - name: Build with Xcode (no codesign)
       run: |
         cd ios
-        # 直接用 xcodebuild 构建，跳过代码签名
+        # 用 build 替代 archive，避免无签名环境下 archive 的问题
         xcodebuild -workspace Runner.xcworkspace \
           -scheme Runner \
           -configuration Release \
@@ -54,13 +54,14 @@ jobs:
           DEVELOPMENT_TEAM="" \
           PROVISIONING_PROFILE_SPECIFIER="" \
           ONLY_ACTIVE_ARCH=NO \
-          clean archive \
-          -archivePath build/Runner.xcarchive
+          clean build \
+          CONFIGURATION_BUILD_DIR=build/Release-iphoneos \
+          SYMROOT=build
 
-    - name: Create IPA from archive
+    - name: Create IPA from build
       run: |
         mkdir -p build/ipa/Payload
-        cp -r ios/build/Runner.xcarchive/Products/Applications/Runner.app build/ipa/Payload/
+        cp -r ios/build/Release-iphoneos/Runner.app build/ipa/Payload/
         cd build/ipa
         zip -r ../vnt_app.ipa Payload
 
