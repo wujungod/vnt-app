@@ -5,7 +5,7 @@
 
 use std::io;
 use std::net::Ipv4Addr;
-use std::os::fd::{AsRawFd, FromRawFd, RawFd};
+use std::os::fd::{AsRawFd, RawFd};
 
 use crate::device::IFace;
 use crate::unix::Fd;
@@ -13,7 +13,7 @@ use crate::unix::Fd;
 /// A TUN device on iOS.
 ///
 /// This is a stub implementation. On iOS, create the device using
-/// `Device::from_fd(fd)` with a file descriptor obtained from
+/// `Device::from_raw_fd(fd)` with a file descriptor obtained from
 /// NEPacketTunnelProvider.
 pub struct Device {
     name: String,
@@ -28,7 +28,7 @@ impl Device {
     pub unsafe fn from_raw_fd(fd: RawFd) -> io::Result<Self> {
         Ok(Device {
             name: format!("utun{}", fd),
-            fd: Some(Fd::from_raw_fd(fd)),
+            fd: Some(Fd::new(fd)?),
         })
     }
 
@@ -117,7 +117,7 @@ impl AsRawFd for Device {
 /// Get a reference to the file descriptor
 impl Device {
     pub fn as_tun_fd(&self) -> &Fd {
-        static INVALID_FD: Fd = unsafe { Fd::from_raw_fd(-1) };
+        static INVALID_FD: Fd = Fd(-1);
         self.fd.as_ref().unwrap_or(&INVALID_FD)
     }
 }
