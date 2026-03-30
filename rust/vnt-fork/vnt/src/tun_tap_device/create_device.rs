@@ -68,15 +68,15 @@ fn create_device0(config: &DeviceConfig) -> io::Result<Arc<Device>> {
         }
         Arc::new(Device::new(Some(device_name))?)
     };
-    #[cfg(any(target_os = "macos", target_os = "ios"))]
+    #[cfg(target_os = "macos")]
     let device = Arc::new(Device::new(config.device_name.clone())?);
     #[cfg(target_os = "ios")]
-    let device = {
+    let device: Arc<Device> = {
         // On iOS, we need to get the fd from Network Extension
         // This is a placeholder - actual fd should be passed from Swift
         return Err(io::Error::new(
             io::ErrorKind::Unsupported,
-            "On iOS, use Device::from_fd() with fd from Network Extension",
+            "On iOS, use Device::from_raw_fd() with fd from Network Extension",
         ));
     };
     #[cfg(target_os = "windows")]
