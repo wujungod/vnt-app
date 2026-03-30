@@ -34,6 +34,19 @@ jobs:
     - name: Get dependencies
       run: flutter pub get
 
+    - name: Disable code signing in Xcode project
+      run: |
+        cd ios
+        # 禁用代码签名
+        sed -i '' 's/CODE_SIGN_IDENTITY = "iPhone Developer";/CODE_SIGN_IDENTITY = "";/g' Runner.xcodeproj/project.pbxproj
+        sed -i '' 's/CODE_SIGN_IDENTITY = "Apple Development";/CODE_SIGN_IDENTITY = "";/g' Runner.xcodeproj/project.pbxproj
+        sed -i '' 's/CODE_SIGN_IDENTITY \[ sdk=iphoneos\* \] = "iPhone Developer";/CODE_SIGN_IDENTITY [ sdk=iphoneos* ] = "";/g' Runner.xcodeproj/project.pbxproj
+        sed -i '' 's/CODE_SIGN_IDENTITY \[ sdk=iphoneos\* \] = "Apple Development";/CODE_SIGN_IDENTITY [ sdk=iphoneos* ] = "";/g' Runner.xcodeproj/project.pbxproj
+        sed -i '' 's/DEVELOPMENT_TEAM = .*/DEVELOPMENT_TEAM = "";/g' Runner.xcodeproj/project.pbxproj
+        # 设置为不需要签名
+        sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' Runner.xcodeproj/project.pbxproj
+        sed -i '' 's/PROVISIONING_PROFILE_SPECIFIER = .*/PROVISIONING_PROFILE_SPECIFIER = "";/g' Runner.xcodeproj/project.pbxproj
+
     - name: Build iOS (no codesign)
       run: flutter build ios --no-codesign --release
 
