@@ -386,7 +386,7 @@ impl<Call: VntCallback, Device: DeviceWrite> ServerPacketHandler<Call, Device> {
                                     match tun::Device::new(device_fd as _) {
                                         Ok(device) => {
                                             if let Err(e) =
-                                                self.tun_device_helper.start(Arc::new(device))
+                                                self.tun_device_helper.start(Arc::new(device), self.config_info.allow_wire_guard)
                                             {
                                                 self.callback.error(ErrorInfo::new_msg(
                                                     ErrorType::Unknown,

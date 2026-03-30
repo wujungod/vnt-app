@@ -181,6 +181,7 @@ impl Config {
             first_latency,
             #[cfg(feature = "integrated_tun")]
             #[cfg(not(target_os = "android"))]
+            #[cfg(not(target_os = "ios"))]
             device_name,
             use_channel_type,
             packet_loss_rate,
