@@ -165,7 +165,7 @@ impl VntInner {
             #[cfg(target_os = "windows")]
             config.tap,
             #[cfg(feature = "integrated_tun")]
-            #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+            #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
             config.device_name.clone(),
             config.allow_wire_guard,
             default_interface.clone(),

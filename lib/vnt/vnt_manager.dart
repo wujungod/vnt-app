@@ -69,8 +69,18 @@ class VntBox {
     }, generateTunFn: (info) async {
       //创建vpn
       try {
-        int fd = await VntAppCall.startVpn(info, vntConfig.mtu ?? 1400);
-        return fd;
+        if (Platform.isAndroid) {
+          int fd = await VntAppCall.startVpn(info, vntConfig.mtu ?? 1400);
+          return fd;
+        } else if (Platform.isIOS) {
+          // iOS: try to start VPN via platform channel
+          // If no Network Extension is configured, we need to handle this gracefully
+          // For now, return 0 to indicate the device couldn't be created
+          debugPrint('iOS TUN: Network Extension not configured, returning fd=0');
+          debugPrint('iOS VPN requires Network Extension capability and NEPacketTunnelProvider');
+          return 0;
+        }
+        return 0;
       } catch (e) {
         debugPrint('创建vpn异常 $e');
         uiCall.send('stop');

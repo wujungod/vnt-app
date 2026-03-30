@@ -13,7 +13,7 @@ use vnt::cipher::CipherModel;
 use vnt::compression::Compressor;
 use vnt::core::{Config, Vnt};
 use vnt::handle::{CurrentDeviceInfo, PeerDeviceInfo};
-#[cfg(target_os = "android")]
+#[cfg(any(target_os = "android", target_os = "ios"))]
 use vnt::DeviceConfig;
 #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
 use vnt::DeviceInfo;
@@ -154,6 +154,7 @@ impl VntApi {
             vnt_config.ports,
             vnt_config.first_latency,
             #[cfg(not(target_os = "android"))]
+            #[cfg(not(target_os = "ios"))]
             vnt_config.device_name,
             use_channel_type,
             vnt_config.packet_loss_rate,
@@ -437,7 +438,7 @@ impl VntCallback for VntApiCallback {
             Runtime::new().unwrap().block_on(async { f(info).await })
         }
     }
-    #[cfg(target_os = "android")]
+    #[cfg(any(target_os = "android", target_os = "ios"))]
     fn generate_tun(&self, info: DeviceConfig) -> usize {
         let inner = self.inner.clone();
         let info = info.into();
@@ -579,7 +580,7 @@ pub struct RustDeviceConfig {
     pub external_route: Vec<(String, String)>,
 }
 
-#[cfg(target_os = "android")]
+#[cfg(any(target_os = "android", target_os = "ios"))]
 impl From<DeviceConfig> for RustDeviceConfig {
     fn from(value: DeviceConfig) -> Self {
         Self {

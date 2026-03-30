@@ -68,7 +68,7 @@ pub struct BaseConfigInfo {
     #[cfg(target_os = "windows")]
     pub tap: bool,
     #[cfg(feature = "integrated_tun")]
-    #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+    #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
     pub device_name: Option<String>,
     pub allow_wire_guard: bool,
     pub default_interface: LocalInterface,
@@ -89,7 +89,7 @@ impl BaseConfigInfo {
         #[cfg(target_os = "windows")]
         tap: bool,
         #[cfg(feature = "integrated_tun")]
-        #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+        #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
         device_name: Option<String>,
         allow_wire_guard: bool,
         default_interface: LocalInterface,
@@ -108,7 +108,7 @@ impl BaseConfigInfo {
             #[cfg(target_os = "windows")]
             tap,
             #[cfg(feature = "integrated_tun")]
-            #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+            #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
             device_name,
             allow_wire_guard,
             default_interface,

@@ -5,21 +5,21 @@ use std::fmt::{Display, Formatter};
 use std::io;
 use std::net::{Ipv4Addr, SocketAddr};
 
-#[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+#[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
 #[derive(Debug)]
 pub struct DeviceInfo {
     pub name: String,
     pub version: String,
 }
 
-#[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+#[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
 impl Display for DeviceInfo {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_str(&format!("name={} ,version={}", self.name, self.version))
     }
 }
 
-#[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+#[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
 impl DeviceInfo {
     pub fn new(name: String, version: String) -> Self {
         return Self { name, version };
@@ -195,7 +195,7 @@ pub struct DeviceConfig {
     #[cfg(target_os = "windows")]
     pub tap: bool,
     #[cfg(feature = "integrated_tun")]
-    #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+    #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
     pub device_name: Option<String>,
     //虚拟网卡mtu值
     pub mtu: u32,
@@ -217,7 +217,7 @@ impl DeviceConfig {
         #[cfg(target_os = "windows")]
         tap: bool,
         #[cfg(feature = "integrated_tun")]
-        #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+        #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
         device_name: Option<String>,
         mtu: u32,
         virtual_ip: Ipv4Addr,
@@ -231,7 +231,7 @@ impl DeviceConfig {
             #[cfg(target_os = "windows")]
             tap,
             #[cfg(feature = "integrated_tun")]
-            #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+            #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
             device_name,
             mtu,
             virtual_ip,
@@ -290,7 +290,7 @@ pub trait VntCallback: Clone + Send + Sync + 'static {
     fn success(&self) {}
 
     /// 创建网卡的信息
-    #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos", target_os = "ios"))]
+    #[cfg(any(target_os = "windows", target_os = "linux", target_os = "macos"))]
     #[cfg(feature = "integrated_tun")]
     fn create_tun(&self, _info: DeviceInfo) {}
     /// 连接
@@ -305,7 +305,7 @@ pub trait VntCallback: Clone + Send + Sync + 'static {
     }
     #[cfg(not(feature = "integrated_tun"))]
     fn create_device(&self, _info: DeviceConfig) {}
-    #[cfg(target_os = "android")]
+    #[cfg(any(target_os = "android", target_os = "ios"))]
     #[cfg(feature = "integrated_tun")]
     fn generate_tun(&self, _info: DeviceConfig) -> usize {
         0

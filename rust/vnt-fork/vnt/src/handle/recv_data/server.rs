@@ -329,8 +329,7 @@ impl<Call: VntCallback, Device: DeviceWrite> ServerPacketHandler<Call, Device> {
                             #[cfg(any(
                                 target_os = "windows",
                                 target_os = "linux",
-                                target_os = "macos",
-                                target_os = "ios"
+                                target_os = "macos"
                             ))]
                             self.config_info.device_name.clone(),
                             self.config_info.mtu,
@@ -348,8 +347,7 @@ impl<Call: VntCallback, Device: DeviceWrite> ServerPacketHandler<Call, Device> {
                             #[cfg(any(
                                 target_os = "windows",
                                 target_os = "linux",
-                                target_os = "macos",
-                                target_os = "ios"
+                                target_os = "macos"
                             ))]
                             match crate::tun_tap_device::create_device(device_config) {
                                 Ok(device) => {
@@ -368,7 +366,7 @@ impl<Call: VntCallback, Device: DeviceWrite> ServerPacketHandler<Call, Device> {
                                     self.callback.error(e);
                                 }
                             }
-                            #[cfg(target_os = "android")]
+                            #[cfg(any(target_os = "android", target_os = "ios"))]
                             {
                                 let device_config = crate::handle::callback::DeviceConfig::new(
                                     self.config_info.mtu,
