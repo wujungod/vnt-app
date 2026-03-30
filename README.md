@@ -1,0 +1,105 @@
+# CI Build Error Logs
+
+## Run #21
+- **Commit:** b5f854a1
+- **Time:** 2026-03-30 17:20:13 UTC
+
+```
+Warning: Building for device with codesigning disabled. You will have to manually codesign before deploying to device.
+Building top.wherewego.vntApp for device (ios-release)...
+Updating project for Xcode compatibility.
+Upgrading project.pbxproj
+Upgrading Runner.xcscheme
+ios/Runner/AppDelegate.swift uses the deprecated @UIApplicationMain attribute, updating.
+.gitignore does not ignore Swift Package Manager build directories, updating.
+Running pod install...                                           1,131ms
+CocoaPods' output:
+↳
+      Preparing
+
+    Analyzing dependencies
+
+    Inspecting targets to integrate
+      Using `ARCHS` setting to build architectures of target `Pods-Runner`: (``)
+      Using `ARCHS` setting to build architectures of target `Pods-PacketTunnelExtension`: (``)
+
+    Fetching external sources
+    -> Fetching podspec for `Flutter` from `Flutter`
+    -> Fetching podspec for `device_info_plus` from `.symlinks/plugins/device_info_plus/ios`
+    -> Fetching podspec for `integration_test` from `.symlinks/plugins/integration_test/ios`
+    -> Fetching podspec for `path_provider_foundation` from `.symlinks/plugins/path_provider_foundation/darwin`
+    -> Fetching podspec for `rust_lib_vnt_app` from `.symlinks/plugins/rust_lib_vnt_app/ios`
+    -> Fetching podspec for `shared_preferences_foundation` from `.symlinks/plugins/shared_preferences_foundation/darwin`
+    -> Fetching podspec for `url_launcher_ios` from `.symlinks/plugins/url_launcher_ios/ios`
+
+    Resolving dependencies of `Podfile`
+
+    Adding spec repo `trunk` with CDN `https://cdn.cocoapods.org/`
+      CDN: trunk Relative path downloaded: CocoaPods-version.yml, save ETag: "69caad0e-38"
+      CDN: trunk Relative path: CocoaPods-version.yml exists! Returning local because checking is only performed in repo update
+      CDN: trunk Relative path downloaded: all_pods_versions_4_2_c.txt, save ETag: W/"69caad0e-535"
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/1.12.1303/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/1.12.1303/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/1.17.0/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/1.17.0/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/1.9.102/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/1.9.102/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/1.22.4/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/1.22.4/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/2.0.0/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/2.0.0/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/2.10.2/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/2.10.2/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/2.5/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/2.5/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/2.2.2/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/2.2.2/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/3.0.0/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/3.0.0/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/3.13.0/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/3.13.0/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/3.13.2/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/3.13.2/FlutterMacOS.podspec.json
+      CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/4/2/c/FlutterMacOS/3.16.0/FlutterMacOS.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/4/2/c/FlutterMacOS/3.16.0/FlutterMacOS.podspec.json
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/1.22.4/FlutterMacOS.podspec.json, save ETag: W/"a29-rCEO9xlEs/BHiQdtcNTHLH7Axhk"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/3.13.2/FlutterMacOS.podspec.json, save ETag: W/"9bd-pvz12gycpa7/oGcgqr7ZN663uh4"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/2.10.2/FlutterMacOS.podspec.json, save ETag: W/"9f0-1oaoZn36NKQE7v1b/MUE20unGtQ"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/2.0.0/FlutterMacOS.podspec.json, save ETag: W/"a30-LxtFbE2UNsTU0TkZvTvo7wO6YyI"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/3.0.0/FlutterMacOS.podspec.json, save ETag: W/"9ef-ReUIyH4BioQ2hgfBIDtKWWKawnk"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/3.13.0/FlutterMacOS.podspec.json, save ETag: W/"9bc-t9hMLsI2WH9zKfTWETQWmvKcNVQ"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/3.16.0/FlutterMacOS.podspec.json, save ETag: W/"9f0-46dwoEkckuCoGAQO9SCyGine/bw"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/1.17.0/FlutterMacOS.podspec.json, save ETag: W/"a06-kUX4eP4wEg0WifAqbw0mvmQak/c"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/1.9.102/FlutterMacOS.podspec.json, save ETag: W/"a2a-fs/UyQIY577K/3M8Ewg1MvspJCA"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/1.12.1303/FlutterMacOS.podspec.json, save ETag: W/"a2c-3l7f6SLgY2HFklEJBcPSy7vCMWQ"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/2.5/FlutterMacOS.podspec.json, save ETag: W/"a3a-B4rs1ilNC3vOEcbc3cs+eBhWegQ"
+      CDN: trunk Relative path downloaded: Specs/4/2/c/FlutterMacOS/2.2.2/FlutterMacOS.podspec.json, save ETag: W/"a3c-0iXfw7ucDo+DNkugXnApNY3JP+0"
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/3.16.0/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/3.16.0/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/3.13.2/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/3.13.0/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/3.0.0/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/2.10.2/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/2.5/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/2.2.2/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/2.0.0/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/1.22.4/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/1.17.0/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/1.12.1303/FlutterMacOS.podspec.json modified during this run! Returning local
+      CDN: trunk Relative path: Specs/4/2/c/FlutterMacOS/1.9.102/FlutterMacOS.podspec.json modified during this run! Returning local
+    [!] Unable to find host target(s) for PacketTunnelExtension. Please add the host targets for the embedded targets to the Podfile.
+    Certain kinds of targets require a host target. A host target is a "parent" target which embeds a "child" target. These are example types of targets that need a host target:
+    - Framework
+    - App Extension
+    - Watch OS 1 Extension
+    - Messages Extension (except when used with a Messages Application)
+
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer/analyzer.rb:392:in `analyze_host_targets_in_podfile'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer/analyzer.rb:468:in `generate_targets'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer/analyzer.rb:128:in `analyze'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer.rb:422:in `analyze'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer.rb:244:in `block in resolve_dependencies'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/user_interface.rb:64:in `section'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer.rb:243:in `resolve_dependencies'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/installer.rb:162:in `install!'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/command/install.rb:52:in `run'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/claide-1.1.0/lib/claide/command.rb:334:in `run'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/lib/cocoapods/command.rb:52:in `run'
+    /opt/homebrew/lib/ruby/gems/3.3.0/gems/cocoapods-1.16.2/bin/pod:55:in `<top (required)>'
+    /opt/homebrew/lib/ruby/site_ruby/3.3.0/rubygems.rb:304:in `load'
+    /opt/homebrew/lib/ruby/site_ruby/3.3.0/rubygems.rb:304:in `activate_and_load_bin_path'
+    /opt/homebrew/lib/ruby/gems/3.3.0/bin/pod:25:in `<main>'
+
+Error running pod install
+```
+
+---
+_Auto-generated by CI_
