@@ -1,0 +1,52 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-ios:
+    runs-on: macos-14  # M1 macOS runner
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.27.1'
+        channel: 'stable'
+
+    - name: Setup Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: aarch64-apple-ios, x86_64-apple-ios, aarch64-apple-ios-sim
+
+    - name: Install Flutter Rust Bridge dependencies
+      run: |
+        flutter pub global activate ffigen
+        echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
+    - name: Get dependencies
+      run: flutter pub get
+
+    - name: Build iOS (no codesign)
+      run: flutter build ios --no-codesign --release
+
+    - name: Create IPA
+      run: |
+        mkdir -p build/ipa/Payload
+        cp -r build/ios/iphoneos/Runner.app build/ipa/Payload/
+        cd build/ipa
+        zip -r ../vnt_app.ipa Payload
+
+    - name: Upload IPA artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: vnt-app-ios
+        path: build/vnt_app.ipa
+        retention-days: 30
