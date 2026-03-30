@@ -34,26 +34,33 @@ jobs:
     - name: Get dependencies
       run: flutter pub get
 
-    - name: Disable code signing in Xcode project
+    - name: Prepare iOS build
       run: |
         cd ios
-        # 禁用代码签名
-        sed -i '' 's/CODE_SIGN_IDENTITY = "iPhone Developer";/CODE_SIGN_IDENTITY = "";/g' Runner.xcodeproj/project.pbxproj
-        sed -i '' 's/CODE_SIGN_IDENTITY = "Apple Development";/CODE_SIGN_IDENTITY = "";/g' Runner.xcodeproj/project.pbxproj
-        sed -i '' 's/CODE_SIGN_IDENTITY \[ sdk=iphoneos\* \] = "iPhone Developer";/CODE_SIGN_IDENTITY [ sdk=iphoneos* ] = "";/g' Runner.xcodeproj/project.pbxproj
-        sed -i '' 's/CODE_SIGN_IDENTITY \[ sdk=iphoneos\* \] = "Apple Development";/CODE_SIGN_IDENTITY [ sdk=iphoneos* ] = "";/g' Runner.xcodeproj/project.pbxproj
-        sed -i '' 's/DEVELOPMENT_TEAM = .*/DEVELOPMENT_TEAM = "";/g' Runner.xcodeproj/project.pbxproj
-        # 设置为不需要签名
-        sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' Runner.xcodeproj/project.pbxproj
-        sed -i '' 's/PROVISIONING_PROFILE_SPECIFIER = .*/PROVISIONING_PROFILE_SPECIFIER = "";/g' Runner.xcodeproj/project.pbxproj
+        pod install
 
-    - name: Build iOS (no codesign)
-      run: flutter build ios --no-codesign --release
+    - name: Build with Xcode (no codesign)
+      run: |
+        cd ios
+        # 直接用 xcodebuild 构建，跳过代码签名
+        xcodebuild -workspace Runner.xcworkspace \
+          -scheme Runner \
+          -configuration Release \
+          -sdk iphoneos \
+          -arch arm64 \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGN_IDENTITY="" \
+          DEVELOPMENT_TEAM="" \
+          PROVISIONING_PROFILE_SPECIFIER="" \
+          ONLY_ACTIVE_ARCH=NO \
+          clean archive \
+          -archivePath build/Runner.xcarchive
 
-    - name: Create IPA
+    - name: Create IPA from archive
       run: |
         mkdir -p build/ipa/Payload
-        cp -r build/ios/iphoneos/Runner.app build/ipa/Payload/
+        cp -r ios/build/Runner.xcarchive/Products/Applications/Runner.app build/ipa/Payload/
         cd build/ipa
         zip -r ../vnt_app.ipa Payload
 
