@@ -66,19 +66,24 @@ class VntBox {
     }, registerFn: (info) {
       // uiCall.send(info);
       return true;
-    }, generateTunFn: (info) async {
+    },     generateTunFn: (info) async {
       //创建vpn
       try {
         if (Platform.isAndroid) {
           int fd = await VntAppCall.startVpn(info, vntConfig.mtu ?? 1400);
           return fd;
         } else if (Platform.isIOS) {
-          // iOS: try to start VPN via platform channel
-          // If no Network Extension is configured, we need to handle this gracefully
-          // For now, return 0 to indicate the device couldn't be created
-          debugPrint('iOS TUN: Network Extension not configured, returning fd=0');
-          debugPrint('iOS VPN requires Network Extension capability and NEPacketTunnelProvider');
-          return 0;
+          // iOS: Start VPN via Network Extension (NEPacketTunnelProvider)
+          // The Extension creates the TUN interface and returns fd via shared UserDefaults
+          debugPrint('iOS TUN: Starting VPN via Network Extension...');
+          debugPrint('iOS TUN: virtualIp=${info.virtualIp}, netmask=${info.virtualNetmask}, gateway=${info.virtualGateway}');
+          int fd = await VntAppCall.startVpn(info, vntConfig.mtu ?? 1400, tunnelServerAddress: config.serverAddress);
+          if (fd > 0) {
+            debugPrint('iOS TUN: Got TUN fd=$fd from Network Extension');
+          } else {
+            debugPrint('iOS TUN: Failed to get TUN fd, got fd=$fd');
+          }
+          return fd;
         }
         return 0;
       } catch (e) {
@@ -101,8 +106,12 @@ class VntBox {
 
   Future<void> close() async {
     vntApi.stop();
-    if (Platform.isAndroid) {
-      await VntAppCall.stopVpn();
+    if (Platform.isAndroid || Platform.isIOS) {
+      try {
+        await VntAppCall.stopVpn();
+      } catch (e) {
+        debugPrint('stopVpn error: $e');
+      }
     }
   }
 
@@ -262,9 +271,12 @@ class VntAppCall {
     });
   }
 
-  static Future<int> startVpn(RustDeviceConfig info, int mtu) async {
-    return await VntAppCall.channel
-        .invokeMethod('startVpn', rustDeviceConfigToMap(info, mtu));
+  static Future<int> startVpn(RustDeviceConfig info, int mtu, {String tunnelServerAddress = ''}) async {
+    final map = rustDeviceConfigToMap(info, mtu);
+    if (tunnelServerAddress.isNotEmpty) {
+      map['tunnelServerAddress'] = tunnelServerAddress;
+    }
+    return await VntAppCall.channel.invokeMethod('startVpn', map);
   }
 
   static Future<void> moveTaskToBack() async {
@@ -285,6 +297,7 @@ class VntAppCall {
       'virtualIp': deviceConfig.virtualIp,
       'virtualNetmask': deviceConfig.virtualNetmask,
       'virtualGateway': deviceConfig.virtualGateway,
+      'virtualNetwork': deviceConfig.virtualNetwork,
       'mtu': mtu,
       'externalRoute': deviceConfig.externalRoute.map((v) {
         return {
@@ -292,6 +305,7 @@ class VntAppCall {
           'netmask': v.$2,
         };
       }).toList(),
+      'dnsServers': [], // DNS is configured by the Extension via NEPacketTunnelNetworkSettings
     };
   }
 }
