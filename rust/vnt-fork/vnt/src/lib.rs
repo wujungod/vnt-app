@@ -12,7 +12,9 @@ pub mod nat;
 mod port_mapping;
 mod proto;
 pub mod protocol;
+#[cfg(feature = "integrated_tun")]
 mod tun_tap_device;
+#[cfg(feature = "integrated_tun")]
 pub use tun_tap_device::*;
 pub mod util;
 
