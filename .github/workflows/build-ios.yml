@@ -34,47 +34,16 @@ jobs:
     - name: Get dependencies
       run: flutter pub get
 
-    - name: Prepare iOS build
+    - name: Build iOS (no codesign)
       run: |
-        cd ios
-        echo "=== Ruby version ==="
-        ruby --version
-        echo "=== CocoaPods version ==="
-        pod --version
-        echo "=== Podfile content ==="
-        cat Podfile
-        echo "=== Generated.xcconfig content ==="
-        cat Flutter/Generated.xcconfig 2>/dev/null || echo "NOT FOUND"
-        echo "=== Running pod install ==="
-        pod install --repo-update --verbose 2>&1 || {
-          echo "=== pod install failed, trying with gem install ==="
-          gem install cocoapods
-          pod install --repo-update
-        }
-
-    - name: Build with Xcode (no codesign)
-      run: |
-        cd ios
-        # 用 build 替代 archive，避免无签名环境下 archive 的问题
-        xcodebuild -workspace Runner.xcworkspace \
-          -scheme Runner \
-          -configuration Release \
-          -sdk iphoneos \
-          -arch arm64 \
-          CODE_SIGNING_ALLOWED=NO \
-          CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGN_IDENTITY="" \
-          DEVELOPMENT_TEAM="" \
-          PROVISIONING_PROFILE_SPECIFIER="" \
-          ONLY_ACTIVE_ARCH=NO \
-          clean build \
-          CONFIGURATION_BUILD_DIR=build/Release-iphoneos \
-          SYMROOT=build
+        flutter build ios --release --no-codesign \
+          --dart-define=FLUTTER_BUILD_NAME=1.0.0 \
+          --dart-define=FLUTTER_BUILD_NUMBER=1
 
     - name: Create IPA from build
       run: |
         mkdir -p build/ipa/Payload
-        cp -r ios/build/Release-iphoneos/Runner.app build/ipa/Payload/
+        cp -r build/ios/iphoneos/Runner.app build/ipa/Payload/
         cd build/ipa
         zip -r ../vnt_app.ipa Payload
 
