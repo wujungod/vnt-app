@@ -45,9 +45,28 @@ jobs:
       run: |
         flutter build ios --release --no-codesign \
           --dart-define=FLUTTER_BUILD_NAME=1.0.0 \
-          --dart-define=FLUTTER_BUILD_NUMBER=1
+          --dart-define=FLUTTER_BUILD_NUMBER=1 \
+          2>&1 | tee build_log.txt || true
+
+    - name: Always upload build log
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-build-log
+        path: build_log.txt
+        retention-days: 7
+
+    - name: Check build result
+      run: |
+        if [ -d "build/ios/iphoneos/Runner.app" ]; then
+          echo "✅ Build succeeded"
+        else
+          echo "❌ Build failed"
+          exit 1
+        fi
 
     - name: Create IPA from build
+      if: success()
       run: |
         mkdir -p build/ipa/Payload
         cp -r build/ios/iphoneos/Runner.app build/ipa/Payload/
@@ -55,6 +74,7 @@ jobs:
         zip -r ../vnt_app.ipa Payload
 
     - name: Upload IPA artifact
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: vnt-app-ios
