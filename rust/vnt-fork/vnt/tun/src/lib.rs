@@ -14,15 +14,11 @@ mod android;
 #[cfg(target_os = "android")]
 pub use android::Device;
 
+// iOS and macOS both use utun, so we share the same implementation
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 mod macos;
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 pub use macos::Device;
-
-#[cfg(target_os = "ios")]
-mod ios;
-#[cfg(target_os = "ios")]
-pub use ios::Device;
 
 #[cfg(unix)]
 mod unix;
