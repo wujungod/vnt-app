@@ -442,7 +442,7 @@ impl VntCallback for VntApiCallback {
     fn generate_tun(&self, info: DeviceConfig) -> usize {
         let inner = self.inner.clone();
         let info = info.into();
-        if Handle::try_current().isOk() {
+        if Handle::try_current().is_ok() {
             thread::spawn(move || {
                 let f = &inner.generate_tun_fn;
                 Runtime::new().unwrap().block_on(async { f(info).await })
